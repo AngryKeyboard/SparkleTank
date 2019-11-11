@@ -27,6 +27,9 @@
     <ClInclude Include="Class_Unit.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Class_Map.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Class_Player.cpp">
@@ -39,6 +42,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_Map.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

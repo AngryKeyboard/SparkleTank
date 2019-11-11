@@ -12,12 +12,14 @@
 #include <Windows.h>
 #include "GameSettings.h"
 #include "Class_Player.h"
+#include "Class_Map.h"
 
 int main() {
+  Class_Map map;
   Class_Player P1;
 
   initgraph(map_wide, map_height);
-  setbkcolor(BLUE);//设置背景色
+  //setbkcolor(BLUE);//设置背景色
   cleardevice();//使用背景色清空屏幕
 
   BeginBatchDraw();
@@ -40,12 +42,17 @@ int main() {
       pos.x++;//计算坐标
       P1.SetPos(pos);//重写当前坐标
     }
+
+    map.show();
     P1.show();//绘图
+
     FlushBatchDraw();
     Sleep(10);
   }
   EndBatchDraw();
 
   system("pause");
+
+  closegraph();
   return 0;
 }

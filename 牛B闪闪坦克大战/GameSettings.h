@@ -34,10 +34,10 @@ typedef struct {
 设置窗口的相关参数
 *****************/
 const Int source_map_px = 8;//原坦克大战一个地图单元对应的像素大小
-const Int px_multiple = 2;//图片像素放大倍数
+const Int px_multiple = 4;//图片像素放大倍数
 const Int map_px = px_multiple * source_map_px;//每个地图单元的实际像素大小
 const Int unit_px = map_px * 2;//坦克、道具的绘图大小
-const Int bullet_px = map_px / 2;//子弹绘图大小
+const Int half_map_px = map_px / 2;//子弹绘图大小
 //地图数组的行、列数
 const Int map_row = 30;
 const Int map_col = 32;

@@ -116,12 +116,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Class_Map.h" />
     <ClInclude Include="Class_Player.h" />
     <ClInclude Include="Class_Tank.h" />
     <ClInclude Include="Class_Unit.h" />
     <ClInclude Include="GameSettings.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Class_Map.cpp" />
     <ClCompile Include="Class_Player.cpp" />
     <ClCompile Include="Class_Tank.cpp" />
     <ClCompile Include="Class_Unit.cpp" />
