@@ -12,6 +12,7 @@
 #pragma once
 #include <iostream>
 #include <Windows.h>
+#include <Mmsystem.h>
 #include <conio.h>
 #include <mmsystem.h>
 #include <graphics.h>
@@ -21,20 +22,20 @@
 using namespace std;
 
 //特殊宏定义
-#define Int unsigned short int
+#define Int unsigned short
 #define MapInt unsigned char
 #define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000)
 
 //绘图坐标
 typedef struct {
-  short int x, y;
+  short x, y;
 }Pos_XY;
 
 /*****************
 设置窗口的相关参数
 *****************/
 const Int source_map_px = 8;//原坦克大战一个地图单元对应的像素大小
-const Int px_multiple = 4;//图片像素放大倍数
+const Int px_multiple = 2;//图片像素放大倍数
 const Int map_px = px_multiple * source_map_px;//每个地图单元的实际像素大小
 const Int unit_px = map_px * 2;//坦克、道具的绘图大小
 const Int half_map_px = map_px / 2;//子弹绘图大小
@@ -115,102 +116,9 @@ enum Key//键盘控制
 /*************
 玩家图片文件名
 **************/
-//玩家四种形态的四个方向的图片
-const wchar_t *const P1_FileName[ArmorCount][DirectionCount][2] =
-{
-  _T("Image\\tank\\player1\\player1_0_up1.png"),_T("Image\\tank\\player1\\player1_0_up2.png"),
-  _T("Image\\tank\\player1\\player1_0_left1.png"),_T("Image\\tank\\player1\\player1_0_left2.png"),
-  _T("Image\\tank\\player1\\player1_0_down1.png"),_T("Image\\tank\\player1\\player1_0_down2.png"),
-  _T("Image\\tank\\player1\\player1_0_right1.png"),_T("Image\\tank\\player1\\player1_0_right2.png"),
-
-  _T("Image\\tank\\player1\\player1_1_up1.png"),_T("Image\\tank\\player1\\player1_1_up2.png"),
-  _T("Image\\tank\\player1\\player1_1_left1.png"),_T("Image\\tank\\player1\\player1_1_left2.png"),
-  _T("Image\\tank\\player1\\player1_1_down1.png"),_T("Image\\tank\\player1\\player1_1_down2.png"),
-  _T("Image\\tank\\player1\\player1_1_right1.png"),_T("Image\\tank\\player1\\player1_1_right2.png"),
-
-  _T("Image\\tank\\player1\\player1_2_up1.png"),_T("Image\\tank\\player1\\player1_2_up2.png"),
-  _T("Image\\tank\\player1\\player1_2_left1.png"),_T("Image\\tank\\player1\\player1_2_left2.png"),
-  _T("Image\\tank\\player1\\player1_2_down1.png"),_T("Image\\tank\\player1\\player1_2_down2.png"),
-  _T("Image\\tank\\player1\\player1_2_right1.png"),_T("Image\\tank\\player1\\player1_2_right2.png"),
-
-  _T("Image\\tank\\player1\\player1_3_up1.png"),_T("Image\\tank\\player1\\player1_3_up2.png"),
-  _T("Image\\tank\\player1\\player1_3_left1.png"),_T("Image\\tank\\player1\\player1_3_left2.png"),
-  _T("Image\\tank\\player1\\player1_3_down1.png"),_T("Image\\tank\\player1\\player1_3_down2.png"),
-  _T("Image\\tank\\player1\\player1_3_right1.png"),_T("Image\\tank\\player1\\player1_3_right2.png")
-};
-const wchar_t *const PlayerHide_FileName[ArmorCount][DirectionCount] =
-{
-  _T("Image\\tank\\player_hide\\player_hide0_up.png"),
-  _T("Image\\tank\\player_hide\\player_hide0_left.png"),
-  _T("Image\\tank\\player_hide\\player_hide0_down.png"),
-  _T("Image\\tank\\player_hide\\player_hide0_right.png"),
-
-  _T("Image\\tank\\player_hide\\player_hide1_up.png"),
-  _T("Image\\tank\\player_hide\\player_hide1_left.png"),
-  _T("Image\\tank\\player_hide\\player_hide1_down.png"),
-  _T("Image\\tank\\player_hide\\player_hide1_right.png"),
-
-  _T("Image\\tank\\player_hide\\player_hide2_up.png"),
-  _T("Image\\tank\\player_hide\\player_hide2_left.png"),
-  _T("Image\\tank\\player_hide\\player_hide2_down.png"),
-  _T("Image\\tank\\player_hide\\player_hide2_right.png"),
-
-  _T("Image\\tank\\player_hide\\player_hide3_up.png"),
-  _T("Image\\tank\\player_hide\\player_hide3_left.png"),
-  _T("Image\\tank\\player_hide\\player_hide3_down.png"),
-  _T("Image\\tank\\player_hide\\player_hide3_right.png")
-};
 const wchar_t *const Commander_FileName[2] = { _T("Image\\commander0.png"),_T("Image\\commander1.png") };
 const wchar_t *const CommanderHide_FileName[2] = { _T("Image\\commander0_hide.png"),_T("Image\\commander1_hide.png") };
 
-/*****************
-电脑玩家图片文件名
-******************/
-//四种敌军坦克的四个方向的图片
-const wchar_t *const CP_FileName[ArmorCount][DirectionCount][2] =
-{
-  _T("Image\\tank\\enemy\\enemy0_up1.png"),_T("Image\\tank\\enemy\\enemy0_up2.png"),
-  _T("Image\\tank\\enemy\\enemy0_left1.png"),_T("Image\\tank\\enemy\\enemy0_left2.png"),
-  _T("Image\\tank\\enemy\\enemy0_down1.png"),_T("Image\\tank\\enemy\\enemy0_down2.png"),
-  _T("Image\\tank\\enemy\\enemy0_right1.png"),_T("Image\\tank\\enemy\\enemy0_right2.png"),
-
-  _T("Image\\tank\\enemy\\enemy1_up1.png"),_T("Image\\tank\\enemy\\enemy1_up2.png"),
-  _T("Image\\tank\\enemy\\enemy1_left1.png"),_T("Image\\tank\\enemy\\enemy1_left2.png"),
-  _T("Image\\tank\\enemy\\enemy1_down1.png"),_T("Image\\tank\\enemy\\enemy1_down2.png"),
-  _T("Image\\tank\\enemy\\enemy1_right1.png"),_T("Image\\tank\\enemy\\enemy1_right2.png"),
-
-  _T("Image\\tank\\enemy\\enemy2_up1.png"),_T("Image\\tank\\enemy\\enemy2_up2.png"),
-  _T("Image\\tank\\enemy\\enemy2_left1.png"),_T("Image\\tank\\enemy\\enemy2_left2.png"),
-  _T("Image\\tank\\enemy\\enemy2_down1.png"),_T("Image\\tank\\enemy\\enemy2_down2.png"),
-  _T("Image\\tank\\enemy\\enemy2_right1.png"),_T("Image\\tank\\enemy\\enemy2_right2.png"),
-
-  _T("Image\\tank\\enemy\\enemy3_up1.png"),_T("Image\\tank\\enemy\\enemy3_up2.png"),
-  _T("Image\\tank\\enemy\\enemy3_left1.png"),_T("Image\\tank\\enemy\\enemy3_left2.png"),
-  _T("Image\\tank\\enemy\\enemy3_down1.png"),_T("Image\\tank\\enemy\\enemy3_down2.png"),
-  _T("Image\\tank\\enemy\\enemy3_right1.png"),_T("Image\\tank\\enemy\\enemy3_right2.png")
-};
-const wchar_t *const CPHide_FileName[ArmorCount][DirectionCount] =
-{
-  _T("Image\\tank\\enemy_hide\\enemy_hide0_up.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide0_left.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide0_down.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide0_right.png"),
-
-  _T("Image\\tank\\enemy_hide\\enemy_hide1_up.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide1_left.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide1_down.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide1_right.png"),
-
-  _T("Image\\tank\\enemy_hide\\enemy_hide2_up.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide2_left.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide2_down.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide2_right.png"),
-
-  _T("Image\\tank\\enemy_hide\\enemy_hide3_up.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide3_left.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide3_down.png"),
-  _T("Image\\tank\\enemy_hide\\enemy_hide3_right.png")
-};
 
 /********************
 地图元素的图片文件名

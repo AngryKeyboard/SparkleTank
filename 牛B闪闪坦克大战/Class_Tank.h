@@ -35,13 +35,6 @@ public:
   void SetDirection(Direction);
   //设置装甲等级
   void SetArmorLev(Armor);
-
-  /********
-  控制函数
-  ********/
-  //移动绘图坐标
-  virtual void show() = 0;
-
 };
 
 inline Direction Class_Tank::GetDirection()const {

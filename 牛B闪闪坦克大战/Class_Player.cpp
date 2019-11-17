@@ -12,27 +12,30 @@
 #include "Class_Player.h"
 
 Class_Player::Class_Player(Pos_XY pos_px, UnitType typ, Direction dir, Armor Lev)
-  :Class_Tank(pos_px, typ, dir, Lev) {
-  laod();
-}
+  :Class_Tank(pos_px, typ, dir, Lev) {}
 
-void Class_Player::show() {
+
+void Class_Player::move(Direction dir) {
   Pos_XY pos = GetPos();
-  putimage(pos.x, pos.y, &img_hide[GetArmorLev()][GetDirection()], SRCAND);//先用遮罩和背景以“按位与”的方式绘制，得到黑色的待填充区域
-  putimage(pos.x, pos.y, &img[GetArmorLev()][GetDirection()][0], SRCPAINT);//再用图片素材和背景以“按位或”的方式绘制，得到透明贴图效果
-}
-
-void Class_Player::laod() {
-  for (int i = 0; i < ArmorCount; i++) {
-    for (int j = 0; j < DirectionCount; j++) {
-      for (size_t k = 0; k < 2; k++) {
-        loadimage(&img[i][j][k], P1_FileName[i][j][k], unit_px, unit_px);
-      }
-    }
+  switch (dir) {
+    case UP:
+      SetDirection(UP);//修改坦克朝向
+      pos.y -= NormalSpeed;//计算坦克新坐标
+      break;
+    case LEFT:
+      SetDirection(LEFT);
+      pos.x -= NormalSpeed;
+      break;
+    case DOWN:
+      SetDirection(DOWN);
+      pos.y += NormalSpeed;
+      break;
+    case RIGHT:
+      SetDirection(RIGHT);
+      pos.x += NormalSpeed;
+      break;
+    default:
+      break;
   }
-  for (size_t i = 0; i < ArmorCount; i++) {
-    for (size_t j = 0; j < DirectionCount; j++) {
-      loadimage(&img_hide[i][j], PlayerHide_FileName[i][j], unit_px, unit_px);
-    }
-  }
+  SetPos(pos);
 }

@@ -28,9 +28,6 @@ public:
   //获取单位的基本信息
   Pos_XY GetPos()const;
   UnitType GetType()const;
-
-  //因为每个单元所占的画面大小不相同，图片规模不同，所以声明为纯虚函数
-  virtual void show() = 0;
 };
 
 /***********

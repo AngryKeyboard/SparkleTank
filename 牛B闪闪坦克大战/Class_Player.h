@@ -13,13 +13,8 @@
 #include "Class_Tank.h"
 class Class_Player :
   public Class_Tank {
-private:
-  IMAGE img[ArmorCount][DirectionCount][2];//保存坦克的四种形态、四个方向的图片
-  IMAGE img_hide[ArmorCount][DirectionCount];//保存坦克的蒙板，用于冰面上的透明显示
-  void laod();//加载图片到内存的函数
-
 public:
   Class_Player(Pos_XY pos_px = { 0,0 }, UnitType typ = P1, Direction dir = UP, Armor Lev = NORMAL);
-  //绘图
-  virtual void show();
+
+  void move(Direction dir);
 };
