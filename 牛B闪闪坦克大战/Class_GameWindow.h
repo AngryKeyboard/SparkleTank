@@ -10,18 +10,28 @@
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
 #pragma once
-#include "Class_Tank.h"
 
-const Pos_RC P1_born_pos = { 26,10 };
+#include <Windows.h>
+#include "GameSettings.h"
+#include "Class_GamePic.h"
+#include "Class_Player.h"
+#include "Class_Map.h"
+#include "Class_Bullet.h"
 
-class Class_Player :
-  public Class_Tank {
+class Class_GameWindow {
+private:
+  Class_GamePic pictures;
+  Class_Map map;
+  Class_Player P1;
+  //Class_Bullet bullet;//测试阶段用
+
 public:
-  Class_Player(Pos_RC map_px = P1_born_pos, UnitType typ = P1, Direction dir = UP, Armor Lev = NORMAL);
+  //开始游戏
+  void play();
 
-  /**********
-  Get系列函数
-  **********/
-  //获取移动速度
-  virtual float GetSpeed()const;
+protected:
+  //刷新画面，effects代表是否使用牛B闪闪特效
+  void renewPic(bool effects = true);
+  //控制函数，传入其它可移动单位，也能让玩家进行控制
+  void ctrl(Class_Unit &unit, Class_Map &map);//控制函数
 };

@@ -13,10 +13,17 @@
 #include "GameSettings.h"
 #include "Class_Tank.h"
 #include "Class_Map.h"
+#include "Class_Bullet.h"
 
 enum Camp {
   CampPlayer, CampComputerPlayer, CampNum
 };
+
+//图片文件编号
+enum MapFileNum {
+  FileNum_wall, FileNum_iron, FileNum_border, FileNum_sea0, FileNum_sea1, FileNum_ice, FileNum_jungle, MapFileCount
+};
+
 
 class Class_GamePic {
 public:
@@ -26,19 +33,34 @@ public:
   void drawTank(const Class_Tank &tank);
   //绘制地图
   void drawMap(const MapInt(*map)[map_row][map_col]);
+  //绘制丛林
+  void drawJungle(const MapInt(*map)[map_row][map_col]);
   //平滑地变化背景色
   void renewBkColor();
+  //转换所有图片的颜色
+  void renewEffects();
+  //刷新画面，effects表示是否启用特效
+  //void renewPic(Class_Map& map, const Class_Tank& tank, Class_Bullet& bullet, bool effects = true);
 
 protected:
   //透明贴图
   void transparentimage(IMAGE *dstimg, int x, int y, IMAGE *srcimg);
   //半透明贴图
   void half_transparentimage(IMAGE *dstimg, int x, int y, IMAGE *srcimg);
+  //根据当前背景色，修改图片素材的颜色
+  void changeEffects(IMAGE *dstimg, IMAGE *srcimg);
+  //绘制海面（动态效果）
+  void drawSea(int x, int y);
+  //绘制子弹
+  void drawBullet(Class_Bullet &bullet);
 
 private:
-  //保存所有坦克图片，变量从左到右分别为：敌军/我军坦克、装甲等级、方向、履带切换
-  IMAGE tankPic[CampNum][ArmorCount][DirectionCount][2];
+  IMAGE tankPic[CampNum][ArmorCount][DirectionCount][2];//坦克图片，角标从左到右分别为：阵营、装甲等级、方向、履带切换
+  IMAGE mapPic[MapFileCount];//地图图片
+  IMAGE bulletPic[DirectionCount];//子弹图片
 
-  //保存地图图片
-  IMAGE mapPic[MapFileCount];
+  //经过处理的图片素材
+  IMAGE tankPic_effects[CampNum][ArmorCount][DirectionCount][2];
+  IMAGE mapPic_effects[MapFileCount];
+  IMAGE bulletPic_effects[DirectionCount];
 };

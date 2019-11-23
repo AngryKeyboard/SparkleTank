@@ -11,31 +11,13 @@
 ****************************************************************************************/
 #include "Class_Player.h"
 
-Class_Player::Class_Player(Pos_XY pos_px, UnitType typ, Direction dir, Armor Lev)
-  :Class_Tank(pos_px, typ, dir, Lev) {}
+Class_Player::Class_Player(Pos_RC map_px, UnitType typ, Direction dir, Armor Lev)
+  : Class_Tank(map_px, typ, dir, Lev) {}
 
-
-void Class_Player::move(Direction dir) {
-  Pos_XY pos = GetPos();
-  switch (dir) {
-    case UP:
-      SetDirection(UP);//修改坦克朝向
-      pos.y -= NormalSpeed;//计算坦克新坐标
-      break;
-    case LEFT:
-      SetDirection(LEFT);
-      pos.x -= NormalSpeed;
-      break;
-    case DOWN:
-      SetDirection(DOWN);
-      pos.y += NormalSpeed;
-      break;
-    case RIGHT:
-      SetDirection(RIGHT);
-      pos.x += NormalSpeed;
-      break;
-    default:
-      break;
-  }
-  SetPos(pos);
+/**********
+Get系列函数
+**********/
+//重写Class_Unit基类的GetSpeed函数
+float Class_Player::GetSpeed()const {
+  return NormalSpeed / 1000.0f;
 }

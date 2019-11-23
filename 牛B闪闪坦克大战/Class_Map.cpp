@@ -20,12 +20,12 @@ const MapInt(*Class_Map::GetAVal())[map_row][map_col]
   return &map;
 }
 
-MapInt Class_Map::GetVal(const Pos_Map &pos)const {
-  return map[pos.row][pos.col];
+MapInt Class_Map::GetVal(const Pos_RC &px_pos)const {
+  return map[px_pos.row][px_pos.col];
 }
 
-void Class_Map::SetVal(const Pos_Map &pos, MapInt val) {
-  map[pos.row][pos.col] = val;
+void Class_Map::SetVal(const Pos_RC &px_pos, MapInt val) {
+  map[px_pos.row][px_pos.col] = val;
 }
 
 void Class_Map::loadmap(unsigned int stage) {

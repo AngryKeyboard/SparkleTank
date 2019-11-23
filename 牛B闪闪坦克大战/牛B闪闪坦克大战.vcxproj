@@ -70,7 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>牛B闪闪坦克大战——by名侦探毛利小五郎（腾讯课堂奇牛学院）</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -87,7 +89,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,20 +121,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Class_Bullet.h" />
     <ClInclude Include="Class_GamePic.h" />
+    <ClInclude Include="Class_GameWindow.h" />
     <ClInclude Include="Class_Map.h" />
     <ClInclude Include="Class_Player.h" />
     <ClInclude Include="Class_Tank.h" />
     <ClInclude Include="Class_Unit.h" />
     <ClInclude Include="GameSettings.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Class_Bullet.cpp" />
     <ClCompile Include="Class_GamePic.cpp" />
+    <ClCompile Include="Class_GameWindow.cpp" />
     <ClCompile Include="Class_Map.cpp" />
     <ClCompile Include="Class_Player.cpp" />
     <ClCompile Include="Class_Tank.cpp" />
     <ClCompile Include="Class_Unit.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="bilibili牛B闪闪坦克大战.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Image\SparkleTank.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -33,6 +33,15 @@
     <ClInclude Include="Class_GamePic.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Class_Bullet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Class_GameWindow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Class_Player.cpp">
@@ -53,5 +62,21 @@
     <ClCompile Include="Class_GamePic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Class_Bullet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_GameWindow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="bilibili牛B闪闪坦克大战.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Image\SparkleTank.ico">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>

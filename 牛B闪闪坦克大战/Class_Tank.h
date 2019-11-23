@@ -12,43 +12,31 @@
 #pragma once
 #include "Class_Unit.h"
 
-//坦克基类只保留最基本的、所有坦克都有的数据
+//坦克基类，向下派生玩家坦克和电脑玩家坦克
 class Class_Tank :
   public Class_Unit {
 private:
-  Direction direction;//方向
-  Armor Armor_Level;//保存当前装甲等级（装甲等级通过拾取道具提升，同时影响坦克的火力情况）
+  bool trackState;//切换履带显示
+  DWORD timer_trackState;//记录履带切换时的时间点
 
 public:
-  Class_Tank(Pos_XY pos_px, UnitType type, Direction dir = DOWN, Armor Lev = NORMAL);
+  Class_Tank(Pos_RC map_pos, UnitType type, Direction dir = DOWN, Armor Lev = NORMAL);
 
   /**********
   Get系列函数
   **********/
-  Direction GetDirection()const;
-  Armor GetArmorLev()const;
+  //获取履带状态
+  bool GetTrackState()const;
 
-  /**********
-  Set系列函数
-  **********/
-  //改变方向
-  void SetDirection(Direction);
-  //设置装甲等级
-  void SetArmorLev(Armor);
+  /********************
+  控制函数（坦克行走等）
+  ********************/
+  //坦克移动
+  virtual void move(Direction dir, const Class_Map &map);
+  //判断坦克是否发生碰撞，false代表无碰撞，true表示碰撞
+  bool ifTouch(const Class_Map &map)const;
+  //刷新坦克绘图坐标，返回true代表坦克可以接受控制
+  bool renewXYPos();
+  //切换履带显示，flag表示是否接收到切换信号，true表示需要切换
+  void renewTrackState();
 };
-
-inline Direction Class_Tank::GetDirection()const {
-  return direction;
-}
-
-inline Armor Class_Tank::GetArmorLev()const {
-  return Armor_Level;
-}
-
-inline void Class_Tank::SetDirection(Direction newDirection) {
-  direction = newDirection;
-}
-
-inline void Class_Tank::SetArmorLev(Armor newArmorLev) {
-  Armor_Level = newArmorLev;
-}

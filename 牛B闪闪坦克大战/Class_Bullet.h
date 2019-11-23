@@ -10,18 +10,33 @@
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
 #pragma once
+#include "Class_Unit.h"
 #include "Class_Tank.h"
-
-const Pos_RC P1_born_pos = { 26,10 };
-
-class Class_Player :
-  public Class_Tank {
+class Class_Bullet :
+  public Class_Unit {
 public:
-  Class_Player(Pos_RC map_px = P1_born_pos, UnitType typ = P1, Direction dir = UP, Armor Lev = NORMAL);
+  Class_Bullet();
+  ~Class_Bullet();
 
-  /**********
-  Get系列函数
-  **********/
-  //获取移动速度
-  virtual float GetSpeed()const;
+  void changeState(bool fix = false);
+  void SetSpeed(Speed);
+  void SetLev(Armor);
+  //发射子弹
+  void shoot(const Class_Tank &tank);
+  //子弹向前移动一步
+  virtual void move(Direction dir, const Class_Map &map);
+
+  bool GetState()const;
+  float GetSpeed()const;
+  Armor GetLev()const;
+
+  bool ifMoveFinish();
+  void checkHitWall(Class_Map &Map, UnitType TankType);//检查并处理地形碰撞
+
+private:
+  Pos_XY fix(Pos_XY pos);//修正绘图坐标
+
+  bool state;//子弹状态，false为不存在，true为存在
+  Speed speed;
+  Armor lev;//子弹发射时候坦克的等级
 };

@@ -11,8 +11,8 @@
 ****************************************************************************************/
 #pragma once
 #include <iostream>
+#include <time.h>
 #include <Windows.h>
-#include <Mmsystem.h>
 #include <conio.h>
 #include <mmsystem.h>
 #include <graphics.h>
@@ -24,11 +24,11 @@ using namespace std;
 //特殊宏定义
 #define Int unsigned short
 #define MapInt unsigned char
-#define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000)
+#define KEY_DOWN(VK_NONAME) (GetAsyncKeyState(VK_NONAME) & 0x8000)  //按键监测，参数为键盘的键值，当某按键被按下时返回非0值
 
 //绘图坐标
 typedef struct {
-  short x, y;
+  float x, y;
 }Pos_XY;
 
 /*****************
@@ -65,12 +65,12 @@ const Int unit_sizeInMap = unit_size / 2;
 物体移动速度、画面刷新速率等设置
 *******************************/
 const Int RenewClock = 1000 / 60;//画面刷新周期
-enum Speed//每次刷新时物体应移动的像素数
+enum Speed//每次刷新时物体应移动的像素数*1000（不能用整数直接代表像素，否则画面放大倍数会影响实际移动速度）
 {
-  SlowSpeed = (2 * unit_sizeInMap * map_px) * RenewClock / 1000, //每秒走两大格
-  NormalSpeed = (3 * unit_sizeInMap * map_px) * RenewClock / 1000, //每秒走三大格
-  FastSpeed = (4 * unit_sizeInMap * map_px) * RenewClock / 1000,//每秒走四大格
-  HighSpeed = 2 * FastSpeed,
+  SlowSpeed = (2 * unit_sizeInMap * map_px) * RenewClock, //每秒走2大格
+  NormalSpeed = (int)(3.5 * unit_sizeInMap * map_px) * RenewClock, //每秒走3.5大格
+  FastSpeed = (5 * unit_sizeInMap * map_px) * RenewClock,//每秒走5大格
+  HighSpeed = (int)(1.25 * NormalSpeed),
   VeryHighSpeed = 2 * HighSpeed
 };
 
@@ -80,8 +80,6 @@ enum Speed//每次刷新时物体应移动的像素数
 enum MapType//地图类型
 {
   EMPTY,//空地
-  WALL_UL = 0x01, WALL_UR = 0x02, WALL_DL = 0x04, WALL_DR = 0x08,//四分之一块砖
-  WALL_UP = 0x03, WALL_LEFT = 0x05, WALL_RIGHT = 0x0A, WALL_DOWN = 0x0C,//半块砖
   WALL = 0x0F,//砖墙
   IRON,//防爆门
   BORDER,//地图边界
@@ -114,29 +112,10 @@ enum Key//键盘控制
 };
 
 /*************
-玩家图片文件名
+BOSS图片文件名
 **************/
 const wchar_t *const Commander_FileName[2] = { _T("Image\\commander0.png"),_T("Image\\commander1.png") };
-const wchar_t *const CommanderHide_FileName[2] = { _T("Image\\commander0_hide.png"),_T("Image\\commander1_hide.png") };
-
-
-/********************
-地图元素的图片文件名
-********************/
-enum MapFileNum {
-  FileNum_wall, FileNum_iron, FileNum_border, FileNum_sea0, FileNum_sea1, FileNum_ice, FileNum_jungle, MapFileCount
-};
-const wchar_t *const Map_FileName[MapFileCount] =
-{ _T("Image\\map\\wall.png"),_T("Image\\map\\iron.png"),_T("Image\\map\\border.png"),_T("Image\\map\\sea0.png"),_T("Image\\map\\sea1.png"),_T("Image\\map\\ice.png"),_T("Image\\map\\jungle.png") };
-
-//子弹图片文件名
-const wchar_t *const Bullet_FileName[DirectionCount] =
-{ _T("Image\\bullet\\bullet_up.png"),_T("Image\\bullet\\bullet_left.png"),_T("Image\\bullet\\bullet_down.png"),_T("Image\\bullet\\bullet_right.png") };
-const wchar_t *const BulletHide_FileName[DirectionCount] =
-{ _T("Image\\bullet\\bullet_hide_up.png"),_T("Image\\bullet\\bullet_hide_left.png"),_T("Image\\bullet\\bullet_hide_down.png"),_T("Image\\bullet\\bullet_hide_right.png") };
 
 //爆炸图片文件名
 const wchar_t *const Boom_FileName[5] =
 { _T("Image\\boom\\boom0.png"),_T("Image\\boom\\boom1.png") ,_T("Image\\boom\\boom2.png") ,_T("Image\\boom\\boom3.png") ,_T("Image\\boom\\boom4.png") };
-const wchar_t *const BoomHide_FileName[5] =
-{ _T("Image\\boom\\boom0_hide.png"),_T("Image\\boom\\boom1_hide.png") ,_T("Image\\boom\\boom2_hide.png") ,_T("Image\\boom\\boom3_hide.png") ,_T("Image\\boom\\boom4_hide.png") };
