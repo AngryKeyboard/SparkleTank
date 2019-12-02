@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="资源文件\IMAGE">
+      <UniqueIdentifier>{9ad1897e-03c7-4d37-8a55-07f8f6624082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\ICON">
+      <UniqueIdentifier>{eedf455a-7637-4222-9fb6-b82320b37041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\MAP">
+      <UniqueIdentifier>{d2f555b8-2b82-4e93-ac1b-5a4859f83590}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSettings.h">
@@ -75,8 +84,25 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Image\SparkleTank.ico">
-      <Filter>资源文件</Filter>
+    <Image Include="Res\Image\boss.png">
+      <Filter>资源文件\IMAGE</Filter>
     </Image>
+    <Image Include="Res\Image\bullet.png">
+      <Filter>资源文件\IMAGE</Filter>
+    </Image>
+    <Image Include="Res\Image\map.png">
+      <Filter>资源文件\IMAGE</Filter>
+    </Image>
+    <Image Include="Res\Image\SparkleTank.ico">
+      <Filter>资源文件\ICON</Filter>
+    </Image>
+    <Image Include="Res\Image\tank.png">
+      <Filter>资源文件\IMAGE</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Res\map.txt">
+      <Filter>资源文件\MAP</Filter>
+    </Text>
   </ItemGroup>
 </Project>

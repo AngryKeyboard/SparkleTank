@@ -10,17 +10,15 @@
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
 #pragma once
-#include <fstream>
 #include "GameSettings.h"
 
-const wchar_t map_file_path[] = _T("");//地图文件的路径名
-const wchar_t map_file_name[] = _T("map.txt");//地图文件的文件名
 const unsigned int max_stage = 35;//地图数量
 
 //行列坐标系
 typedef struct {
   Int row, col;
 }Pos_RC;
+bool operator ==(const Pos_RC &a, const Pos_RC &b);
 
 //地图类
 class Class_Map {
@@ -33,6 +31,8 @@ public:
   MapInt GetVal(const Pos_RC &px_pos)const;
   //修改地图上的数值
   void SetVal(const Pos_RC &px_pos, MapInt val);
+  //切换关卡的函数
+  void ChangeStage(unsigned int stage);
 
 private:
   MapInt map[map_row][map_col];//保存地图数据的数组

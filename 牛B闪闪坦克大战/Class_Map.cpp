@@ -9,7 +9,12 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
+#include <iostream>
+#include <fstream>
 #include "Class_Map.h"
+using std::ifstream;
+using std::wstring;
+using std::hex;
 
 Class_Map::Class_Map() {
   loadmap();
@@ -28,12 +33,24 @@ void Class_Map::SetVal(const Pos_RC &px_pos, MapInt val) {
   map[px_pos.row][px_pos.col] = val;
 }
 
+void Class_Map::ChangeStage(unsigned int stage) {
+  loadmap(stage);
+}
+
 void Class_Map::loadmap(unsigned int stage) {
   ifstream map_file;//地图文件流
   wstring temp;//保存地图文件名
 
-  temp = map_file_path;
-  temp += map_file_name;
+  // 产生临时文件的文件名
+  TCHAR tmp_map[_MAX_PATH];
+  ::GetTempPath(_MAX_PATH, tmp_map);
+  _tcscat(tmp_map, _T("map.txt"));
+  // 将 MP3 资源提取为临时文件
+  ExtractResource(tmp_map, _T("MAP"), _T("map"));
+
+  //temp = map_file_path;
+  //temp += map_file_name;
+  temp = tmp_map;
   map_file.open(temp);
   if (!map_file.is_open()) {
     printf("地图文件打开失败！\n");
@@ -54,4 +71,16 @@ void Class_Map::loadmap(unsigned int stage) {
     }
   }
   map_file.close();
+
+  // 删除临时文件
+  DeleteFile(tmp_map);
+}
+
+//其它函数
+//运算符重载
+bool operator ==(const Pos_RC &a, const Pos_RC &b) {
+  if (a.row == b.row && a.col == b.col) {
+    return true;
+  }
+  return false;
 }

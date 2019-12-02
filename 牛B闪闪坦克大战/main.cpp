@@ -9,88 +9,40 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
-#include <Windows.h>
 #include "Class_GameWindow.h"
 
-//void ctrl(Class_Tank& tank, Class_Map& map);//控制函数
-
 int main() {
-  Class_GameWindow game;
-  game.play();
-  //Class_GamePic pictures;
-  //Class_Map map;
-  //Class_Player P1;
-  //Class_Bullet bullet;
-
-  //BeginBatchDraw();//开启批量绘图模式
-  ////bullet.shoot(P1);
-  //while (true)
-  //{
-  //  static DWORD pic_timer = timeGetTime();//控制图像刷新时间
-  //  DWORD now = timeGetTime();
-  //  //如果到了刷新画面的时间，就执行绘制操作
-  //  if (now - pic_timer >= RenewClock)
-  //  {
-  //    pic_timer = now;
-  //    if (P1.renewXYPos())
-  //    {
-  //      //bullet.shoot(P1);
-  //      ctrl(P1, map);
-  //    }
-  //    pictures.renewPic(map, P1,bullet);
-  //    FlushBatchDraw();//刷新画面
-  //  }
-
-  //  Sleep(5);
-  //}
-  //EndBatchDraw();//结束批量绘图模式
+  Class_GameWindow *game = new Class_GameWindow;
+  game->play();
+  delete game;
 
   return 0;
 }
 
-//void ctrl(Class_Tank& tank, Class_Map& map)
-//{
-//  //当有多个按键按下时，坦克不移动（按键锁定，只允许一个方向移动）
-//
-//  bool key_state[DirectionCount] = { false };//保存当前按键状态
-//  int count = 0;//保存当前按下按键的个数
-//
-//  //记录按键状态
-//  if (KEY_DOWN(Key_DOWN))
-//  {
-//    key_state[DOWN] = true;
-//  }
-//  if (KEY_DOWN(Key_UP))
-//  {
-//    key_state[UP] = true;
-//  }
-//  if (KEY_DOWN(Key_LEFT))
-//  {
-//    key_state[LEFT] = true;
-//  }
-//  if (KEY_DOWN(Key_RIGHT))
-//  {
-//    key_state[RIGHT] = true;
-//  }
-//
-//  //统计有几个键按下
-//  for (size_t i = 0; i < DirectionCount; i++)
-//  {
-//    if (key_state[i])
-//    {
-//      count++;
-//    }
-//  }
-//  if (count == 1)//如果只有一个键按下
-//  {
-//    size_t i;
-//    for (i = 0; i < DirectionCount; i++)//找出被按下的键对应的方向
-//    {
-//      if (key_state[i] == true)
-//      {
-//        break;
-//      }
-//    }
-//    tank.move((Direction)i, map);//坦克移动
-//  }
-//}
+//////////////////////////////////////////////////////////////////
+// 提取指定模块中的资源文件
+// 参数：
+//    strDstFile:   目标文件名。提取的资源将保存在这里；
+//    strResType:   资源类型；
+//    strResName:   资源名称；
+// 返回值：
+//    true: 执行成功；
+//    false: 执行失败。
+bool ExtractResource(LPCTSTR strDstFile, LPCTSTR strResType, LPCTSTR strResName) {
+  // 创建文件
+  HANDLE hFile = ::CreateFile(strDstFile, GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_TEMPORARY, NULL);
+  if (hFile == INVALID_HANDLE_VALUE)
+    return false;
+
+  // 查找资源文件中、加载资源到内存、得到资源大小
+  HRSRC hRes = ::FindResource(NULL, strResName, strResType);
+  HGLOBAL hMem = ::LoadResource(NULL, hRes);
+  DWORD dwSize = ::SizeofResource(NULL, hRes);
+
+  // 写入文件
+  DWORD dwWrite = 0;    // 写入大小
+  ::WriteFile(hFile, hMem, dwSize, &dwWrite, NULL);
+  ::CloseHandle(hFile);
+
+  return true;
+}

@@ -32,11 +32,11 @@ public:
   控制函数（坦克行走等）
   ********************/
   //坦克移动
-  virtual void move(Direction dir, const Class_Map &map);
+  virtual bool move(Direction dir, const Class_Map &map);
   //判断坦克是否发生碰撞，false代表无碰撞，true表示碰撞
-  bool ifTouch(const Class_Map &map)const;
+  //bool ifTouch(const Class_Map & map)const;
   //刷新坦克绘图坐标，返回true代表坦克可以接受控制
-  bool renewXYPos();
+  //bool renewXYPos();
   //切换履带显示，flag表示是否接收到切换信号，true表示需要切换
   void renewTrackState();
 };

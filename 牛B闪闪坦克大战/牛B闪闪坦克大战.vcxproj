@@ -145,7 +145,14 @@
     <ResourceCompile Include="bilibili牛B闪闪坦克大战.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Image\SparkleTank.ico" />
+    <Image Include="Res\Image\boss.png" />
+    <Image Include="Res\Image\bullet.png" />
+    <Image Include="Res\Image\map.png" />
+    <Image Include="Res\Image\SparkleTank.ico" />
+    <Image Include="Res\Image\tank.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Res\map.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,10 +31,13 @@ public:
   /********************
   控制函数（单位移动等）
   ********************/
-  //移动函数
-  virtual void move(Direction dir, const Class_Map &map) = 0;
+  //移动函数（发生体积碰撞时返回true）
+  virtual bool move(Direction dir, const Class_Map &map) = 0;
+  //virtual void move(const Class_Map& map);
   //刷新单位绘图坐标，返回true代表该单位可以继续在地图上移动（主要用来补帧）
-  virtual bool renewXYPos() = 0;
+  virtual bool renewXYPos();
+  //判断单位是否发生碰撞，false代表无碰撞，true表示碰撞
+  virtual bool ifTouch(const Class_Map &map)const;
 
   /**********
   Set系列函数

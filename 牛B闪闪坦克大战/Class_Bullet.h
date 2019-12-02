@@ -11,32 +11,21 @@
 ****************************************************************************************/
 #pragma once
 #include "Class_Unit.h"
-#include "Class_Tank.h"
+
 class Class_Bullet :
   public Class_Unit {
 public:
-  Class_Bullet();
-  ~Class_Bullet();
+  Class_Bullet(const Class_Unit &tank);
 
-  void changeState(bool fix = false);
-  void SetSpeed(Speed);
-  void SetLev(Armor);
-  //发射子弹
-  void shoot(const Class_Tank &tank);
-  //子弹向前移动一步
-  virtual void move(Direction dir, const Class_Map &map);
-
-  bool GetState()const;
-  float GetSpeed()const;
-  Armor GetLev()const;
-
-  bool ifMoveFinish();
-  void checkHitWall(Class_Map &Map, UnitType TankType);//检查并处理地形碰撞
+  //子弹向前移动一步，如果发生地形碰撞，返回true
+  virtual bool move(Direction dir, const Class_Map &map);
+  //获取移动速度
+  virtual float GetSpeed()const;
+  //判断子弹是否发生碰撞，false代表无碰撞，true表示碰撞
+  virtual bool ifTouch(const Class_Map &map)const;
+  //获取子弹的所有者
+  unsigned int GetOwner();
 
 private:
-  Pos_XY fix(Pos_XY pos);//修正绘图坐标
-
-  bool state;//子弹状态，false为不存在，true为存在
-  Speed speed;
-  Armor lev;//子弹发射时候坦克的等级
+  UnitType owner;//用来区分每一颗炮弹是谁发射的
 };

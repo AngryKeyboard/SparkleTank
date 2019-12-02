@@ -10,16 +10,8 @@
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
 #pragma once
-#include <iostream>
-#include <time.h>
-#include <Windows.h>
-#include <conio.h>
-#include <mmsystem.h>
 #include <graphics.h>
-
 #pragma comment(lib,"Winmm.lib")
-
-using namespace std;
 
 //特殊宏定义
 #define Int unsigned short
@@ -34,7 +26,9 @@ typedef struct {
 /*****************
 设置窗口的相关参数
 *****************/
-const Int source_map_px = 8;//原坦克大战一个地图单元对应的像素大小
+const Int source_map_px = 8;//原地图单元对应的像素大小
+const Int source_unit_px = source_map_px * 2;//每个单位（坦克、道具等）原始素材的像素大小
+const Int source_half_map_px = source_map_px / 2;//子弹原始素材的像素大小
 const Int px_multiple = 2;//图片像素放大倍数
 const Int map_px = px_multiple * source_map_px;//每个地图单元的实际像素大小
 const Int unit_px = map_px * 2;//坦克、道具的绘图大小
@@ -49,12 +43,13 @@ const Int unit_col = map_col * 2;
 //游戏界面的宽和高（像素）
 const Int map_wide = map_px * map_col;
 const Int map_height = map_px * map_row;
-//菜单按钮的宽和高
-const Int menue_wide = 80;
-const Int menue_height = 40;
-//菜单文字的宽度和高度、字体类型
-const Int text_size = 30;
-const wchar_t *const text_style = _T("华文楷体");
+
+////菜单按钮的宽和高
+//const Int menue_wide = 80;
+//const Int menue_height = 40;
+////菜单文字的宽度和高度、字体类型
+//const Int text_size = 30;
+//const wchar_t* const text_style = _T("华文楷体");
 
 
 const Int unit_size = 4;//每个单元在unit矩阵中占用的宽度（坦克长宽为4，炮弹为2）
@@ -70,8 +65,8 @@ enum Speed//每次刷新时物体应移动的像素数*1000（不能用整数直
   SlowSpeed = (2 * unit_sizeInMap * map_px) * RenewClock, //每秒走2大格
   NormalSpeed = (int)(3.5 * unit_sizeInMap * map_px) * RenewClock, //每秒走3.5大格
   FastSpeed = (5 * unit_sizeInMap * map_px) * RenewClock,//每秒走5大格
-  HighSpeed = (int)(1.25 * NormalSpeed),
-  VeryHighSpeed = 2 * HighSpeed
+  HighSpeed = (int)(1.5 * FastSpeed),
+  VeryHighSpeed = (int)(2 * HighSpeed)
 };
 
 /***************
@@ -111,11 +106,12 @@ enum Key//键盘控制
   Key_START = 'F', Key_SELECT = 'R'
 };
 
-/*************
-BOSS图片文件名
-**************/
-const wchar_t *const Commander_FileName[2] = { _T("Image\\commander0.png"),_T("Image\\commander1.png") };
-
-//爆炸图片文件名
-const wchar_t *const Boom_FileName[5] =
-{ _T("Image\\boom\\boom0.png"),_T("Image\\boom\\boom1.png") ,_T("Image\\boom\\boom2.png") ,_T("Image\\boom\\boom3.png") ,_T("Image\\boom\\boom4.png") };
+// 提取指定模块中的资源文件
+// 参数：
+//    strDstFile:   目标文件名。提取的资源将保存在这里；
+//    strResType:   资源类型；
+//    strResName:   资源名称；
+// 返回值：
+//    true: 执行成功；
+//    false: 执行失败。
+bool ExtractResource(LPCTSTR strDstFile, LPCTSTR strResType, LPCTSTR strResName);

@@ -15,16 +15,16 @@
 #include "Class_Map.h"
 #include "Class_Bullet.h"
 
-enum Camp {
-  CampPlayer, CampComputerPlayer, CampNum
+enum Camp//阵营
+{
+  CampPlayer, CampComputerPlayer, CampCount
 };
-
-//图片文件编号
-enum MapFileNum {
+enum MapFileNum//图片文件编号
+{
   FileNum_wall, FileNum_iron, FileNum_border, FileNum_sea0, FileNum_sea1, FileNum_ice, FileNum_jungle, MapFileCount
 };
 
-
+//图片管理类
 class Class_GamePic {
 public:
   Class_GamePic();
@@ -35,6 +35,8 @@ public:
   void drawMap(const MapInt(*map)[map_row][map_col]);
   //绘制丛林
   void drawJungle(const MapInt(*map)[map_row][map_col]);
+  //绘制子弹
+  void drawBullet(Class_Bullet &bullet);
   //平滑地变化背景色
   void renewBkColor();
   //转换所有图片的颜色
@@ -44,23 +46,24 @@ public:
 
 protected:
   //透明贴图
-  void transparentimage(IMAGE *dstimg, int x, int y, IMAGE *srcimg);
+  /*void transparentimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg);*/
   //半透明贴图
   void half_transparentimage(IMAGE *dstimg, int x, int y, IMAGE *srcimg);
   //根据当前背景色，修改图片素材的颜色
   void changeEffects(IMAGE *dstimg, IMAGE *srcimg);
   //绘制海面（动态效果）
   void drawSea(int x, int y);
-  //绘制子弹
-  void drawBullet(Class_Bullet &bullet);
+
 
 private:
-  IMAGE tankPic[CampNum][ArmorCount][DirectionCount][2];//坦克图片，角标从左到右分别为：阵营、装甲等级、方向、履带切换
+  IMAGE tankPic[CampCount][ArmorCount][DirectionCount][2];//坦克图片，角标从左到右分别为：阵营、装甲等级、方向、履带切换
   IMAGE mapPic[MapFileCount];//地图图片
   IMAGE bulletPic[DirectionCount];//子弹图片
 
   //经过处理的图片素材
-  IMAGE tankPic_effects[CampNum][ArmorCount][DirectionCount][2];
+  IMAGE tankPic_effects[CampCount][ArmorCount][DirectionCount][2];
   IMAGE mapPic_effects[MapFileCount];
   IMAGE bulletPic_effects[DirectionCount];
+
+  float bkHSL[3];//保存背景色HSL模型颜色数据
 };
