@@ -18,7 +18,7 @@ const Pos_RC P1_born_pos = { 26,10 };
 class Class_Player :
   public Class_Tank {
 public:
-  Class_Player(Pos_RC map_px = P1_born_pos, UnitType typ = P1, Direction dir = UP, Armor Lev = STRONG);
+  Class_Player(Pos_RC map_px = P1_born_pos, UnitType typ = P1, Direction dir = UP, Armor Lev = NORMAL);
 
   /**********
   Get系列函数

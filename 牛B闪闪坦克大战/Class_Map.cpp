@@ -25,12 +25,95 @@ const MapInt(*Class_Map::GetAVal())[map_row][map_col]
   return &map;
 }
 
-MapInt Class_Map::GetVal(const Pos_RC &px_pos)const {
-  return map[px_pos.row][px_pos.col];
+MapInt Class_Map::GetVal(const Pos_RC &map_pos)const {
+  return map[map_pos.row][map_pos.col];
 }
 
-void Class_Map::SetVal(const Pos_RC &px_pos, MapInt val) {
-  map[px_pos.row][px_pos.col] = val;
+void Class_Map::SetVal(const Pos_RC &map_pos, MapInt val) {
+  map[map_pos.row][map_pos.col] = val;
+}
+
+void Class_Map::DestroyMap(const Pos_RC &map_pos, const Direction &dir, const DestroyLev &dLev) {
+  switch (dLev) {
+    case NoDestroy:
+      return;
+      break;
+    case HalfDestroy:
+    {
+      MapInt tmp = map[map_pos.row][map_pos.col];//获取该点的地图数据
+      bool flag[DirectionCount] = { false };//保存四个方向是否存在砖块的标记
+
+      //找出砖块还残余哪一部分，便于后续的消除判断
+      if (tmp & 1) {
+        flag[UP] = true;
+        flag[LEFT] = true;
+      }
+      tmp = tmp >> 1;
+      if (tmp & 1) {
+        flag[UP] = true;
+        flag[RIGHT] = true;
+      }
+      tmp = tmp >> 1;
+      if (tmp & 1) {
+        flag[DOWN] = true;
+        flag[LEFT] = true;
+      }
+      tmp = tmp >> 1;
+      if (tmp & 1) {
+        flag[DOWN] = true;
+        flag[RIGHT] = true;
+      }
+
+      //根据射击方向处理砖块的销毁
+      switch (dir) {
+        case UP:
+          if (flag[DOWN]) {
+            //如果下半部砖块存在
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_UP;//保留上半部砖块
+          }
+          else {
+            //消除整块砖
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_EMPTY;
+          }
+          break;
+        case LEFT:
+          if (flag[RIGHT]) {
+            //如果右半部砖块存在
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_LEFT;//保留左半部砖块
+          }
+          else {
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_EMPTY;
+          }
+          break;
+        case DOWN:
+          if (flag[UP]) {
+            //如果上半部砖块存在
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_DOWN;//保留下半部砖块
+          }
+          else {
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_EMPTY;
+          }
+          break;
+        case RIGHT:
+          if (flag[LEFT]) {
+            //如果左半部砖块存在
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_RIGHT;//保留右半部砖块
+          }
+          else {
+            map[map_pos.row][map_pos.col] = map[map_pos.row][map_pos.col] & HalfWall_EMPTY;
+          }
+          break;
+        default:
+          break;
+      }
+    }
+    break;
+    case AllDestroy:
+      SetVal(map_pos, EMPTY);
+      break;
+    default:
+      break;
+  }
 }
 
 void Class_Map::ChangeStage(unsigned int stage) {
@@ -45,7 +128,7 @@ void Class_Map::loadmap(unsigned int stage) {
   TCHAR tmp_map[_MAX_PATH];
   ::GetTempPath(_MAX_PATH, tmp_map);
   _tcscat(tmp_map, _T("map.txt"));
-  // 将 MP3 资源提取为临时文件
+  // 将 MAP 资源提取为临时文件
   ExtractResource(tmp_map, _T("MAP"), _T("map"));
 
   //temp = map_file_path;

@@ -9,13 +9,19 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
+#include <stdio.h>
+#include <Windows.h>
 #include "Class_GameWindow.h"
 
 int main() {
+  printf("\n\n正在加载游戏，请稍候...\n");
   Class_GameWindow *game = new Class_GameWindow;
   game->play();
   delete game;
+  system("cls");
+  printf("\n\n已退出游戏。\n\n牛B闪闪坦克大战视频链接（附源码下载）：https://www.bilibili.com/video/av71261823/ \n\n\n\n");
 
+  system("pause");
   return 0;
 }
 

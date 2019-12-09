@@ -99,6 +99,9 @@
     <Image Include="Res\Image\tank.png">
       <Filter>资源文件\IMAGE</Filter>
     </Image>
+    <Image Include="Res\Image\boom.png">
+      <Filter>资源文件\IMAGE</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Res\map.txt">

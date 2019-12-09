@@ -53,7 +53,7 @@ public:
   //改变方向
   void SetDirection(Direction);
   //设置装甲等级
-  void SetArmorLev(Armor);
+  void SetArmorLev(Armor newArmorLev);
 
   /**********
   Get系列函数
@@ -62,6 +62,8 @@ public:
   const Pos_XY &GetXYPos()const;
   //获取终点绘图坐标
   const Pos_XY &GetEndXYPos()const;
+  //获取爆炸贴图的坐标
+  //virtual const Pos_XY GetBoomXYPos()const;
   //获取单位的类型
   const UnitType &GetType()const;
   //获取单位所在的地图坐标
