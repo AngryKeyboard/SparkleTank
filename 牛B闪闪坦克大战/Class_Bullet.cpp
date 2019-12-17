@@ -19,23 +19,23 @@ Class_Bullet::Class_Bullet(const Class_Unit &tank)
   switch (GetDirection()) {
     case UP:
       unit_pos.col++;
-      px_pos.x = unit_pos.col * half_map_px + half_map_px / 2;
+      px_pos.x = (float)unit_pos.col * half_map_px + half_map_px / 2;
       break;
     case LEFT:
       unit_pos.row++;
-      px_pos.y = unit_pos.row * half_map_px + half_map_px / 2;
+      px_pos.y = (float)unit_pos.row * half_map_px + half_map_px / 2;
       break;
     case DOWN:
       unit_pos.col++;
       unit_pos.row += 3;
-      px_pos.x = unit_pos.col * half_map_px + half_map_px / 2;
-      px_pos.y = unit_pos.row * half_map_px + half_map_px / 2;
+      px_pos.x = (float)unit_pos.col * half_map_px + half_map_px / 2;
+      px_pos.y = (float)unit_pos.row * half_map_px + half_map_px / 2;
       break;
     case RIGHT:
       unit_pos.row++;
       unit_pos.col += 3;
-      px_pos.x = unit_pos.col * half_map_px + half_map_px / 2;
-      px_pos.y = unit_pos.row * half_map_px + half_map_px / 2;
+      px_pos.x = (float)unit_pos.col * half_map_px + half_map_px / 2;
+      px_pos.y = (float)unit_pos.row * half_map_px + half_map_px / 2;
       break;
     default:
       break;
@@ -151,139 +151,23 @@ float Class_Bullet::GetSpeed() const {
 }
 
 bool Class_Bullet::ifTouch(const Class_Map &map) {
-  //bool des_flag[2][2] = { false };
   Direction dir = GetDirection();
-  //MapInt map_tmp[2] = { 0 };//保存检查点的地图数据
-  //Pos_RC curPos[MapIndexCount] = { GetMapPos(),GetMapPos() };//获取当前行列坐标，有两个碰撞判定点
   //计算需要进行体积碰撞判定的两个点
   renewCheckPoints(map);
 
-  //switch (GetDirection())
-  //{
-  //case UP:
-  //case DOWN:
-  //  curPos[1].col++;
-  //  break;
-  //case RIGHT:
-  //case LEFT:
-  //  curPos[1].row++;
-  //  break;
-  //default:
-  //  break;
-  //}
-  ////获取检查点的地图值
-  //for (size_t i = 0; i < MapIndexCount; i++)
-  //{
-  //  map_tmp[i] = map.GetVal(curPos[i]);
-  //}
-
-  //碰撞判断
-  //先检查炮弹是否会击中砖块的角落
-  renewTouchFlags();
-  //switch (dir)
-  //{
-  //case UP:
-  //  //先检查第一层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_DR)
-  //  {
-  //    touch_flags[FirstLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_DL)
-  //  {
-  //    touch_flags[FirstLayer][SecondMap] = true;
-  //  }
-  //  //再检查第二层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_UR)
-  //  {
-  //    touch_flags[SecondLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_UL)
-  //  {
-  //    touch_flags[SecondLayer][SecondMap] = true;
-  //  }
-  //  break;
-  //case LEFT:
-  //  //先检查第一层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_DR)
-  //  {
-  //    touch_flags[FirstLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_UR)
-  //  {
-  //    touch_flags[FirstLayer][SecondMap] = true;
-  //  }
-  //  //再检查第二层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_DL)
-  //  {
-  //    touch_flags[SecondLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_UL)
-  //  {
-  //    touch_flags[SecondLayer][SecondMap] = true;
-  //  }
-  //  break;
-  //case DOWN:
-  //  //先检查第一层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_UR)
-  //  {
-  //    touch_flags[FirstLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_UL)
-  //  {
-  //    touch_flags[FirstLayer][SecondMap] = true;
-  //  }
-  //  //再检查第二层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_DR)
-  //  {
-  //    touch_flags[SecondLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_DL)
-  //  {
-  //    touch_flags[SecondLayer][SecondMap] = true;
-  //  }
-  //  break;
-  //case RIGHT:
-  //  //先检查第一层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_DL)
-  //  {
-  //    touch_flags[FirstLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_UL)
-  //  {
-  //    touch_flags[FirstLayer][SecondMap] = true;
-  //  }
-  //  //再检查第二层砖是否会被碰到
-  //  if (map_tmp[FirstMap] & Wall_DR)
-  //  {
-  //    touch_flags[SecondLayer][FirstMap] = true;
-  //  }
-  //  if (map_tmp[SecondMap] & Wall_UR)
-  //  {
-  //    touch_flags[SecondLayer][SecondMap] = true;
-  //  }
-  //  break;
-  //default:
-  //  break;
-  //}
-
-  //检查体积碰撞
+  //返回体积碰撞结果
   for (size_t iLayer = 0; iLayer < LayerCount; iLayer++) {
     for (size_t iMap = 0; iMap < MapIndexCount; iMap++) {
       if (check_points_val[iMap] > EMPTY && check_points_val[iMap] <= BORDER) {
         if (touch_flags[iLayer][iMap] == true) {
-          return true;
+          return true;//发生碰撞
         }
+      }
+      if (check_points_val[iMap] >= HEADQUARTERS_UL && check_points_val[iMap] <= HEADQUARTERS_DR) {
+        return true;//发生碰撞（与指挥部碰撞）
       }
     }
   }
-  //for (size_t i = 0; i < 2; i++)
-  //{
-  //  MapInt checkPoint = map.GetVal(curPos[i]);//获取需要检查的地图点取值
-  //  if (checkPoint > EMPTY&& checkPoint <= BORDER)
-  //  {
-  //    return true;//发生碰撞
-  //  }
-  //}
   return false;//未发生碰撞
 }
 
@@ -307,23 +191,26 @@ const bool(*Class_Bullet::GetTouchFlags() const)[LayerCount][MapIndexCount]
 const Pos_XY Class_Bullet::GetBoomXYPos() const {
   //根据终点绘图坐标得到一个爆炸贴图的绘图坐标
   Pos_XY tmp = GetEndXYPos();
-  tmp.x -= boom_px / 2 - half_map_px;
-  tmp.y -= boom_px / 2 - half_map_px;
+  //tmp.x -= boom_px / 2 - half_map_px;
+  //tmp.y -= boom_px / 2 - half_map_px;
+  tmp.x -= 3.25 * half_map_px;
+  tmp.y -= 3.25 * half_map_px;
   //增加一个坐标偏移，让爆炸点不会总是重合在一起
-  int r[2] = { 0 };//获取一个坐标偏移量
+  int xy_offset[2] = { 0 };//获取一个坐标偏移量
   bool flag[2] = { false };//用来控制xy的坐标偏移采用加法还是减法
   for (size_t i = 0; i < 2; i++) {
     flag[i] = rand() % 2;
-    r[i] = rand() % (source_map_px / 2) * px_multiple;
+    xy_offset[i] = rand() % (source_map_px / 2) * px_multiple;
   }
-  tmp.x += pow(-1, flag[0]) * r[0];
-  tmp.y += pow(-1, flag[1]) * r[1];
+  tmp.x += (float)pow(-1, flag[0]) * xy_offset[0];
+  tmp.y += (float)pow(-1, flag[1]) * xy_offset[1];
   return tmp;
 }
 
 void Class_Bullet::renewCheckPoints(const Class_Map &map) {
   renewCheckPointsPos();
   renewCheckPointsVal(map);
+  renewTouchFlags();
 }
 
 void Class_Bullet::renewCheckPointsPos() {
@@ -354,6 +241,12 @@ void Class_Bullet::renewCheckPointsVal(const Class_Map &map) {
 }
 
 void Class_Bullet::renewTouchFlags() {
+  //先清空标记
+  for (size_t iLayer = 0; iLayer < LayerCount; iLayer++) {
+    for (size_t iMap = 0; iMap < MapIndexCount; iMap++) {
+      touch_flags[iLayer][iMap] = false;
+    }
+  }
   //先检查炮弹是否会击中砖块的角落
   switch (GetDirection()) {
     case UP:

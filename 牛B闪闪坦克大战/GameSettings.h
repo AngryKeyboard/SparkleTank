@@ -44,12 +44,20 @@ const Int unit_row = map_row * 2;
 const Int unit_col = map_col * 2;
 
 //游戏界面的宽和高（像素）
-const Int map_wide = map_px * map_col;
-const Int map_height = map_px * map_row;
+const Int source_gamewindow_width = source_map_px * map_col;
+const Int source_gamewindow_height = source_map_px * map_row;
+const Int gamewindow_width = map_px * map_col;
+const Int gamewindow_height = map_px * map_row;
 
 const Int unit_size = 4;//每个单元在unit矩阵中占用的宽度（坦克长宽为4，炮弹为2）
 const Int bullet_size = unit_size / 2;
 const Int unit_sizeInMap = unit_size / 2;
+
+/*********************
+游戏开始界面的相关参数
+**********************/
+const Int logo_row = 14;//logo图片占用的地图行数
+const Int logo_col = 2 * logo_row;//logo图片占用的地图列数
 
 /*******************************
 物体移动速度、画面刷新速率等设置
@@ -61,7 +69,7 @@ enum Speed//每次刷新时物体应移动的像素数*1000（不能用整数直
   SlowSpeed = (2 * unit_sizeInMap * map_px) * RenewClock, //每秒走2大格
   NormalSpeed = (int)(3.5 * unit_sizeInMap * map_px) * RenewClock, //每秒走3.5大格
   FastSpeed = (5 * unit_sizeInMap * map_px) * RenewClock,//每秒走5大格
-  HighSpeed = (int)(1.25 * FastSpeed),
+  HighSpeed = (int)(1.5 * FastSpeed),
   VeryHighSpeed = (int)(2 * HighSpeed)
 };
 
@@ -77,6 +85,14 @@ enum MapType//地图类型
   SEA,//海面
   ICE = 0x21,//冰面
   JUNGLE,//丛林
+  HEADQUARTERS_UL = 0xC8,
+  HEADQUARTERS_DL = 0xC9,
+  HEADQUARTERS_UR = 0xCA,
+  HEADQUARTERS_DR = 0xCB,
+  HEADQUARTERS_UL_FAIL = 0xCC,
+  HEADQUARTERS_DL_FAIL,
+  HEADQUARTERS_UR_FAIL,
+  HEADQUARTERS_DR_FAIL
 };
 enum UnitType//各单位类型值，用于碰撞检测
 {

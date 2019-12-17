@@ -239,7 +239,7 @@ bool Class_Unit::ifTouch(const Class_Map &map) const {
   //碰撞判断
   for (size_t i = 0; i < 2; i++) {
     MapInt checkPoint = map.GetVal(curPos[i]);//获取需要检查的地图点取值
-    if (checkPoint > EMPTY && checkPoint <= SEA) {
+    if (checkPoint > EMPTY && checkPoint <= SEA || checkPoint >= HEADQUARTERS_UL && checkPoint <= HEADQUARTERS_DR_FAIL) {
       return true;//发生碰撞
     }
   }
