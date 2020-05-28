@@ -18,6 +18,9 @@ Class_GameWindow::Class_GameWindow()
 }
 
 void Class_GameWindow::gameWindow() {
+
+
+  //进入游戏循环
   while (true) {
 
     //bool pause = false;
@@ -60,18 +63,36 @@ void Class_GameWindow::play() {
     unit = &p1;
     if (unit) {
       if (unit->renewXYPos()) {
+        //如果单位移动补帧完成，就进入控制状态
         ctrl(*unit, map);
+      }
+
+      for (size_t i = 0; i < enemys.size(); i++) {
+        //刷新所有敌人移动状态
+        if (enemys[i].renewXYPos()) {
+          //如果坦克移动补帧完成，就进入控制状态
+          enemys[i].renewRun(map);
+        }
       }
     }
     renewBullets();
+    renewStars();
 
     //测试语句（恶搞版），内有关卡切换、坦克形态切换
     static DWORD stage_timer = Class_Timer::GetGameTime();//控制关卡刷新时间
     now = Class_Timer::GetGameTime();
-    if (now - stage_timer >= 5000) {
+    if (now - stage_timer >= 3000) {
+      stage_timer = now;
+
       map.ChangeStage(rand() % 35 + 1);
       unit->SetArmorLev((Armor)(rand() % ArmorCount));
-      stage_timer = now;
+
+      if (enemys.size() < MaxLivingEnemy && Class_ComputerPlayer::GetEnemyCount() > 0) {
+        //如果剩余坦克大于0且场上还可以增加坦克，就创建一个敌军坦克
+        //enemys.push_back(Class_ComputerPlayer());
+        stars.push_back(Class_Star(CP_born_pos[(MaxEnemy - Class_ComputerPlayer::CP_count) % CP_born_pos_num], CP));
+      }
+
       ////测试用，切换游戏状态
       //game_state = !game_state;
     }
@@ -79,6 +100,12 @@ void Class_GameWindow::play() {
   else if (KEY_DOWN(Key_START) && !game_state) {
     //如果当前游戏没开始，且按下了游戏开始按钮，进入游戏
     game_state = !game_state;
+
+    //游戏开场有3辆坦克
+    for (size_t i = 0; i < 3; i++) {
+      //enemys.push_back(Class_ComputerPlayer());
+      stars.push_back(Class_Star(CP_born_pos[(MaxEnemy - Class_ComputerPlayer::CP_count) % CP_born_pos_num], CP));
+    }
   }
   renewPic();//刷新画面
 }
@@ -109,9 +136,21 @@ void Class_GameWindow::renewGamePic() {
       pictures.drawBullet(bullets[i]);
     }
   }
+  if (!enemys.empty())//绘制敌军坦克
+  {
+    for (size_t i = 0; i < enemys.size(); i++) {
+      pictures.drawTank(enemys[i]);
+    }
+  }
   pictures.drawTank(p1);//绘制坦克，测试阶段，以后改为循环访问，绘制所有坦克单位
   pictures.drawJungle(map.GetAVal());//绘制丛林
   pictures.drawBooms();//绘制爆炸贴图
+  if (!stars.empty())//绘制星星
+  {
+    for (size_t i = 0; i < stars.size(); i++) {
+      pictures.drawStar(stars[i].GetXYPos());
+    }
+  }
 }
 
 void Class_GameWindow::renewStartPic() {
@@ -138,8 +177,18 @@ void Class_GameWindow::renewBullets() {
   //}
   if (!bullets.empty()) {
     for (auto it = bullets.begin(); it != bullets.end();) {
+      bool flag = false;//暂用
+
       if (it->renewXYPos())//如果补帧完成
       {
+        //暂用，功能正常后优化
+        if (destroyTank(*it)) {
+          if (it->GetOwner() == P1) {
+            p1_bullet_count--;
+          }
+          flag = true;
+        }
+
         //让炮弹移动
         if (it->move(it->GetDirection(), map))//如果移动后有体积碰撞
         {
@@ -148,11 +197,37 @@ void Class_GameWindow::renewBullets() {
           }
           //修改地形、增加爆炸点，并且删除这枚炮弹
           destroyMap(*it);
-          pictures.addBoomPoint(it->GetBoomXYPos());
+          //pictures.addBoomPoint(it->GetBoomXYPos());
           //pictures.addBoomPoint(it->GetBoomXYPos(), true);//测试大型爆炸用
+          //it = bullets.erase(it);
+          //continue;
+          flag = true;
+        }
+
+        if (flag) {
+          pictures.addBoomPoint(it->GetBoomXYPos());
           it = bullets.erase(it);
           continue;
         }
+      }
+      it++;
+    }
+  }
+}
+
+void Class_GameWindow::renewStars() {
+  if (!stars.empty()) {
+    DWORD now = Class_Timer::GetGameTime();//获取当前游戏时间
+    for (auto it = stars.begin(); it != stars.end();) {
+      if (it->GetDuration() < now) {
+        //如果当前星星已经过了持续时间，就清除掉该星星，并插入一个坦克对象
+        //插入坦克
+        if (it->GetType() == CP) {
+          enemys.push_back(Class_ComputerPlayer(it->GetMapPos()));
+        }
+
+        it = stars.erase(it);//清除星星
+        continue;
       }
       it++;
     }
@@ -290,4 +365,47 @@ void Class_GameWindow::destroyMap(const Class_Bullet &bullet) {
       }
     }
   }
+}
+
+bool Class_GameWindow::destroyTank(const Class_Bullet &bullet) {
+  unsigned int owner = bullet.GetOwner();
+  Direction dir = bullet.GetDirection();
+  Pos_RC check_points[2] = { bullet.GetUnitPos(),bullet.GetUnitPos() };
+  bool flag = false;//保存碰撞结果
+
+  //根据方向调整第二个检查点的坐标
+  switch (dir) {
+    case UP:
+    case DOWN:
+      check_points[1].col++;
+      break;
+    case LEFT:
+    case RIGHT:
+      check_points[1].row++;
+      break;
+    default:
+      break;
+  }
+
+  //分别对两个检查点进行碰撞检测
+  for (auto it = enemys.begin(); it != enemys.end();) {
+    for (size_t i = 0; i < 2; i++) {
+      Pos_RC enemy_pos = it->GetUnitPos();//获取当前敌人的坐标
+      if (check_points[i].row >= enemy_pos.row && check_points[i].row <= enemy_pos.row + unit_size && check_points[i].col >= enemy_pos.col && check_points[i].col <= enemy_pos.col + unit_size) {
+        //如果炮弹在坦克的体积范围内（如果炮弹击中了坦克）
+        flag = true;
+      }
+    }
+    if (flag) {
+      //处理碰撞（消除被击中坦克）
+      //注：所有坦克目前只需一炮就会被击毁
+      pictures.addBoomPoint(it->GetBoomXYPos(), true);
+      it = enemys.erase(it);
+      break;
+    }
+
+    it++;
+  }
+
+  return flag;//返回碰撞结果，便于炮弹的消除处理
 }

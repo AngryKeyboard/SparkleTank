@@ -266,8 +266,8 @@ void Class_Unit::SetUnitPos(const Pos_RC &unit_pos) {
 
   //px_pos = end_px_pos;//测试用语句，补帧完成后删除
 }
-void Class_Unit::SetDirection(Direction newDirection) {
-  direction = newDirection;
+void Class_Unit::SetDirection(int newDirection) {
+  direction = (Direction)newDirection;
 }
 void Class_Unit::SetArmorLev(Armor newArmorLev) {
   Armor_Level = newArmorLev;

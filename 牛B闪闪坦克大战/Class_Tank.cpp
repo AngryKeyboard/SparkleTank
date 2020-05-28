@@ -27,6 +27,23 @@ bool Class_Tank::GetTrackState() const {
   return trackState;
 }
 
+Pos_XY Class_Tank::GetBoomXYPos() const {
+  //根据终点绘图坐标得到一个爆炸贴图的绘图坐标
+  Pos_XY tmp = GetEndXYPos();
+  tmp.x -= 2 * half_map_px;
+  tmp.y -= 2 * half_map_px;
+  //增加一个坐标偏移，让爆炸点不会总是重合在一起
+  int xy_offset[2] = { 0 };//获取一个坐标偏移量
+  bool flag[2] = { false };//用来控制xy的坐标偏移采用加法还是减法
+  for (size_t i = 0; i < 2; i++) {
+    flag[i] = rand() % 2;
+    xy_offset[i] = rand() % (source_map_px / 2) * px_multiple;
+  }
+  tmp.x += (float)pow(-1, flag[0]) * xy_offset[0];
+  tmp.y += (float)pow(-1, flag[1]) * xy_offset[1];
+  return tmp;
+}
+
 /********************
 控制函数（坦克行走等）
 ********************/

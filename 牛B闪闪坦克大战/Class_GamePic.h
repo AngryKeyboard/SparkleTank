@@ -69,6 +69,8 @@ public:
   void drawBooms();
   //绘制logo图片
   void drawLogo(bool effect = true);
+  //绘制星星
+  void drawStar(const Pos_XY &pos);
 
   /******************
   爆炸贴图相关接口

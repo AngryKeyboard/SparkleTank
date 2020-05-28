@@ -146,7 +146,7 @@ void Class_Map::loadmap(unsigned int stage) {
   temp = tmp_map;
   map_file.open(temp);
   if (!map_file.is_open()) {
-    printf("地图文件打开失败！\n");
+    //printf("地图文件打开失败！\n");
     exit(1);
   }
 
@@ -154,6 +154,7 @@ void Class_Map::loadmap(unsigned int stage) {
   stage -= 1;
   stage = stage % max_stage;
   map_file.seekg(stage * map_row * map_col * 3 + stage);//文件定位到指定字节（CRLF回车换行，所以要加stage）
+  //map_file.seekg(stage * map_row * map_col * 3 );//文件定位到指定字节（LF回车换行，不加stage）
 
   int num_temp;//暂存文件读取的整数，
   for (size_t row = 0; row < map_row; row++) {

@@ -22,27 +22,21 @@
     <Filter Include="资源文件\MAP">
       <UniqueIdentifier>{d2f555b8-2b82-4e93-ac1b-5a4859f83590}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\游戏单位">
+      <UniqueIdentifier>{1771dfb7-8c4f-4fe4-beaa-d0f38901c89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\游戏单位">
+      <UniqueIdentifier>{7656b090-cba8-4830-9e4a-ec012a00840b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSettings.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Class_Player.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Class_Tank.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Class_Unit.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Class_Map.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Class_GamePic.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Class_Bullet.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Class_GameWindow.h">
@@ -54,17 +48,26 @@
     <ClInclude Include="Class_Timer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Class_Tank.h">
+      <Filter>头文件\游戏单位</Filter>
+    </ClInclude>
+    <ClInclude Include="Class_Player.h">
+      <Filter>头文件\游戏单位</Filter>
+    </ClInclude>
+    <ClInclude Include="Class_Unit.h">
+      <Filter>头文件\游戏单位</Filter>
+    </ClInclude>
+    <ClInclude Include="Class_Bullet.h">
+      <Filter>头文件\游戏单位</Filter>
+    </ClInclude>
+    <ClInclude Include="Class_ComputerPlayer.h">
+      <Filter>头文件\游戏单位</Filter>
+    </ClInclude>
+    <ClInclude Include="Class_Star.h">
+      <Filter>头文件\游戏单位</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Class_Player.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Class_Tank.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Class_Unit.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -74,14 +77,29 @@
     <ClCompile Include="Class_GamePic.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Class_Bullet.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Class_GameWindow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Class_Timer.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_Player.cpp">
+      <Filter>源文件\游戏单位</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_Tank.cpp">
+      <Filter>源文件\游戏单位</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_Unit.cpp">
+      <Filter>源文件\游戏单位</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_Bullet.cpp">
+      <Filter>源文件\游戏单位</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_ComputerPlayer.cpp">
+      <Filter>源文件\游戏单位</Filter>
+    </ClCompile>
+    <ClCompile Include="Class_Star.cpp">
+      <Filter>源文件\游戏单位</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +124,9 @@
       <Filter>资源文件\IMAGE</Filter>
     </Image>
     <Image Include="Res\Image\boom.png">
+      <Filter>资源文件\IMAGE</Filter>
+    </Image>
+    <Image Include="Res\Image\tank_520.png">
       <Filter>资源文件\IMAGE</Filter>
     </Image>
   </ItemGroup>

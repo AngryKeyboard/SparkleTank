@@ -32,7 +32,7 @@ public:
   控制函数（单位移动等）
   ********************/
   //移动函数（发生体积碰撞时返回true）
-  virtual bool move(Direction dir, const Class_Map &map) = 0;
+  virtual bool move(Direction dir, const Class_Map &map);
   //virtual void move(const Class_Map& map);
   //刷新单位绘图坐标，返回true代表该单位可以继续在地图上移动（主要用来补帧）
   virtual bool renewXYPos();
@@ -51,7 +51,7 @@ public:
   //设置另一组更精细的地图坐标
   void SetUnitPos(const Pos_RC &unit_pos);
   //改变方向
-  void SetDirection(Direction);
+  void SetDirection(int newDirection);
   //设置装甲等级
   void SetArmorLev(Armor newArmorLev);
 

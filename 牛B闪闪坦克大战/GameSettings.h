@@ -101,7 +101,7 @@ enum UnitType//各单位类型值，用于碰撞检测
   P1 = 300,//1号玩家
   P2 = 400,//2号玩家
   CP = 600,//敌人
-  COMMANDER = 0xC8,//指挥官
+  //COMMANDER = 0xC8,//指挥官
 };
 enum Direction//方向，绘制、开炮时用
 {

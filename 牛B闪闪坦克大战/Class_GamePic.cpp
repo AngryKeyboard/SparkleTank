@@ -9,9 +9,9 @@
  * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the MulanOWL BY v1 for more details.
 ****************************************************************************************/
-#include <iostream>
 #include "Class_GamePic.h"
 #include "Class_Timer.h"
+#include "resource.h"
 
 const float max_val[3] = { 360.f,0.7f,0.3f };//控制HSL最大取值
 const float min_val[3] = { 0.f,0.4f,0.f };//控制HSL最小取值
@@ -437,6 +437,11 @@ void Class_GamePic::drawLogo(bool effect) {
   RECT rect;//一个矩形
   rect = { 0,16 * source_map_px,source_gamewindow_width - 1,(16 + 3) * source_map_px - 1 };
   drawtext(_T("按F进入坦克！ESC退出！"), &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);//设置显示内容单行、水平垂直居中
+}
+
+void Class_GamePic::drawStar(const Pos_XY &pos) {
+  // TODO：将星星改为使用图片绘制
+  fillrectangle(pos.x / px_multiple, pos.y / px_multiple, (pos.x + map_px) / px_multiple, (pos.y + map_px) / px_multiple);//测试语句
 }
 
 void Class_GamePic::addBoomPoint(const Pos_XY &pos, bool state) {

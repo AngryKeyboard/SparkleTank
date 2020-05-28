@@ -27,6 +27,8 @@ public:
   **********/
   //获取履带状态
   bool GetTrackState()const;
+  //获取爆炸贴图坐标
+  Pos_XY GetBoomXYPos()const;
 
   /********************
   控制函数（坦克行走等）

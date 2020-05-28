@@ -138,10 +138,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Class_Bullet.h" />
+    <ClInclude Include="Class_ComputerPlayer.h" />
     <ClInclude Include="Class_GamePic.h" />
     <ClInclude Include="Class_GameWindow.h" />
     <ClInclude Include="Class_Map.h" />
     <ClInclude Include="Class_Player.h" />
+    <ClInclude Include="Class_Star.h" />
     <ClInclude Include="Class_Tank.h" />
     <ClInclude Include="Class_Timer.h" />
     <ClInclude Include="Class_Unit.h" />
@@ -150,10 +152,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Class_Bullet.cpp" />
+    <ClCompile Include="Class_ComputerPlayer.cpp" />
     <ClCompile Include="Class_GamePic.cpp" />
     <ClCompile Include="Class_GameWindow.cpp" />
     <ClCompile Include="Class_Map.cpp" />
     <ClCompile Include="Class_Player.cpp" />
+    <ClCompile Include="Class_Star.cpp" />
     <ClCompile Include="Class_Tank.cpp" />
     <ClCompile Include="Class_Timer.cpp" />
     <ClCompile Include="Class_Unit.cpp" />
@@ -169,6 +173,7 @@
     <Image Include="Res\Image\map.png" />
     <Image Include="Res\Image\SparkleTank.ico" />
     <Image Include="Res\Image\tank.png" />
+    <Image Include="Res\Image\tank_520.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Res\map.txt" />
